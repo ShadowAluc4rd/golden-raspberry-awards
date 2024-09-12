@@ -21,7 +21,6 @@ Siga os passos abaixo para rodar a aplicação localmente:
 
 Primeiro, você precisa clonar o projeto do repositório para a sua máquina:
 
-```bash
 git clone https://github.com/seu-usuario/golden-raspberry-awards-api.git
 
 Entre no diretório do projeto:
