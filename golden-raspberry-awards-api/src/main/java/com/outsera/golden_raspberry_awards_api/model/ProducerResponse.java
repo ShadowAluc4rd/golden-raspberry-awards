@@ -4,24 +4,22 @@ import java.util.List;
 
 public class ProducerResponse {
 
-    private List<ProducerInterval> menorIntervalo;
-    private List<ProducerInterval> maiorIntervalo;
+    private List<ProducerInterval> min;
+    private List<ProducerInterval> max;
 
-
-
-    public List<ProducerInterval> getMenorIntervalo() {
-        return menorIntervalo;
+    public List<ProducerInterval> getMin() {
+        return min;
     }
 
-    public void setMenorIntervalo(List<ProducerInterval> menorIntervalo) {
-        this.menorIntervalo = menorIntervalo;
+    public void setMin(List<ProducerInterval> min) {
+        this.min = min;
     }
 
-    public List<ProducerInterval> getMaiorIntervalo() {
-        return maiorIntervalo;
+    public List<ProducerInterval> getMax() {
+        return max;
     }
 
-    public void setMaiorIntervalo(List<ProducerInterval> maiorIntervalo) {
-        this.maiorIntervalo = maiorIntervalo;
+    public void setMax(List<ProducerInterval> max) {
+        this.max = max;
     }
 }

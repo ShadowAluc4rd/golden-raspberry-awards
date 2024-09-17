@@ -22,7 +22,11 @@ public class ProducerService {
         // Agrupa os filmes vencedores por produtor e anos
         for (Movie movie : movies) {
             if (movie.isWinner()) {
-                producerWinYears.computeIfAbsent(movie.getProducers(), k -> new ArrayList<>()).add(movie.getYear());
+                String[] producers = movie.getProducers().split(",| and ");
+                for (String producer : producers) {
+                    producer = producer.trim();
+                    producerWinYears.computeIfAbsent(producer, k -> new ArrayList<>()).add(movie.getYear());
+                }
             }
         }
 
@@ -30,18 +34,19 @@ public class ProducerService {
         List<ProducerInterval> minIntervals = new ArrayList<>();
         List<ProducerInterval> maxIntervals = new ArrayList<>();
 
+        int globalMinInterval = Integer.MAX_VALUE;
+        int globalMaxInterval = Integer.MIN_VALUE;
+
         // Calcula os intervalos de prêmios para cada produtor
         for (Map.Entry<String, List<Integer>> entry : producerWinYears.entrySet()) {
             String producer = entry.getKey();
             List<Integer> winYears = entry.getValue();
-            Collections.sort(winYears);  // Ordena os anos
+            Collections.sort(winYears);
 
             if (winYears.size() < 2) {
                 continue;
             }
 
-            int minInterval = Integer.MAX_VALUE;
-            int maxInterval = Integer.MIN_VALUE;
             int previousWin = winYears.get(0);
 
             // Percorre os anos de vitória para calcular intervalos
@@ -49,30 +54,30 @@ public class ProducerService {
                 int followingWin = winYears.get(i);
                 int interval = followingWin - previousWin;
 
-                // Atualiza menor intervalo
-                if (interval < minInterval) {
-                    minInterval = interval;
-                    minIntervals.clear(); // Limpa os anteriores
-                    minIntervals.add(new ProducerInterval(producer, minInterval, previousWin, followingWin));
-                } else if (interval == minInterval) {
-                    minIntervals.add(new ProducerInterval(producer, minInterval, previousWin, followingWin));
+                // Atualiza menor intervalo global
+                if (interval < globalMinInterval) {
+                    globalMinInterval = interval;
+                    minIntervals.clear();
+                    minIntervals.add(new ProducerInterval(producer, interval, previousWin, followingWin));
+                } else if (interval == globalMinInterval) {
+                    minIntervals.add(new ProducerInterval(producer, interval, previousWin, followingWin));
                 }
 
-                // Atualiza maior intervalo
-                if (interval > maxInterval) {
-                    maxInterval = interval;
+                // Atualiza maior intervalo global
+                if (interval > globalMaxInterval) {
+                    globalMaxInterval = interval;
                     maxIntervals.clear(); // Limpa os anteriores
-                    maxIntervals.add(new ProducerInterval(producer, maxInterval, previousWin, followingWin));
-                } else if (interval == maxInterval) {
-                    maxIntervals.add(new ProducerInterval(producer, maxInterval, previousWin, followingWin));
+                    maxIntervals.add(new ProducerInterval(producer, interval, previousWin, followingWin));
+                } else if (interval == globalMaxInterval) {
+                    maxIntervals.add(new ProducerInterval(producer, interval, previousWin, followingWin));
                 }
 
                 previousWin = followingWin;
             }
         }
 
-        response.setMenorIntervalo(minIntervals);
-        response.setMaiorIntervalo(maxIntervals);
+        response.setMin(minIntervals);
+        response.setMax(maxIntervals);
         return response;
     }
 

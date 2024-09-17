@@ -32,11 +32,11 @@ public class ProducerIntegrationTest {
         ProducerResponse producerResponse = response.getBody();
         Assertions.assertNotNull(producerResponse, "A resposta da API não deveria ser nula.");
 
-        Assertions.assertNotNull(producerResponse.getMenorIntervalo(), "A lista de menor intervalo não deveria ser nula.");
-        Assertions.assertFalse(producerResponse.getMenorIntervalo().isEmpty(), "A lista de menor intervalo não deveria estar vazia.");
+        Assertions.assertNotNull(producerResponse.getMin(), "A lista de menor intervalo não deveria ser nula.");
+        Assertions.assertFalse(producerResponse.getMin().isEmpty(), "A lista de menor intervalo não deveria estar vazia.");
 
-        Assertions.assertNotNull(producerResponse.getMaiorIntervalo(), "A lista de maior intervalo não deveria ser nula.");
-        Assertions.assertFalse(producerResponse.getMaiorIntervalo().isEmpty(), "A lista de maior intervalo não deveria estar vazia.");
+        Assertions.assertNotNull(producerResponse.getMax(), "A lista de maior intervalo não deveria ser nula.");
+        Assertions.assertFalse(producerResponse.getMax().isEmpty(), "A lista de maior intervalo não deveria estar vazia.");
     }
 
 
