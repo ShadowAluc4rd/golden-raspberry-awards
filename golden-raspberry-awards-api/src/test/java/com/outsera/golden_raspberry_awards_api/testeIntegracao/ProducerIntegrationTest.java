@@ -41,7 +41,7 @@ public class ProducerIntegrationTest {
         String responseJson = objectMapper.writeValueAsString(producerResponse);
 
         // Comparar os JSONs
-        JSONAssert.assertEquals(expectedJson, responseJson, JSONCompareMode.STRICT);
+        JSONAssert.assertEquals("A resposta da API não corresponde ao conteúdo esperado!", expectedJson, responseJson, JSONCompareMode.STRICT);
     }
 
     @Test
